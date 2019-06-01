@@ -25,26 +25,30 @@ module.exports = {
         rules:[
                 {
                     test:/\.(s*)css$/, //or  test: /\.scss/,
-                    use:[ 'style-loader','css-loader'
-                        /*
-                         {
+                    use:[ 
+                        {
                          loader: 'style-loader',
                          options: {
                             sourceMap:true,
                           },
-
+                        },
+                        
+                        {
                          loader: 'css-loader', 
                          options: {
                             sourceMap: true,
                           },
-
-                        loader: 'resolve-url-loader',
-                        options: {
-                            root: path.resolve(__dirname, 'src'),
-                            sourceMap: true,
                         },
-                         
 
+                        // {
+                        //   loader: 'resolve-url-loader',
+                        //    options: {
+                        //    root: path.resolve(__dirname, 'src'),
+                        //    sourceMap: true,
+                        //    },
+                        // },
+
+                        {
                          loader: 'sass-loader',
                          options: {
                             context: path.resolve(__dirname, 'src'),
@@ -52,14 +56,14 @@ module.exports = {
                             sourceMap: true,
                             includePaths: [path.resolve(__dirname, 'src/css'), path.resolve(__dirname, 'src')],
                           },
-                        */
-                         
-                        ]
-                 }
-         ]
+                        },
+                        
+                      ],
+                 },
+         ],
       },
     
-    //watch: true, //previously was watch
+    watch: true, 
     resolve: { 
         extensions: [".js", ".ts", '.css'],
         modules: [
