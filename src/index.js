@@ -2,6 +2,10 @@ const helperModule =  require('./my-helper-module');
 import * as _ from 'lodash';
 import './../styles/app.css'; //we want to import app.css as a module dependency by webpack
 import './../styles/appStyles.scss';
+import homeIcon from '../images/home.png';
+
+var homeImg = document.getElementById('home');
+homeImg.src = homeIcon;
 
 console.log("Welcome from app.js. Let's learn Webpack4!!!!!!");
 console.log(helperModule.greetings);

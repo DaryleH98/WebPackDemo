@@ -2,8 +2,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 var package = require('./package.json');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 //add a rule to use ‘css-loader’ and ‘style-loader’ for .css files.
-console.log(package.dependencies);
+
 
 module.exports = {
     mode: 'production',
@@ -24,43 +25,48 @@ module.exports = {
     module:{
         rules:[
                 {
-                    test:/\.(s*)css$/, //or  test: /\.scss/,
-                    use:[ 
-                        {
-                         loader: 'style-loader',
-                         options: {
-                            sourceMap:true,
+                    test:/\.(s*)css$/,
+                    use: ExtractTextPlugin.extract({
+                         fallback: 'style-loader',
+                         
+                         use:[                 
+                          {
+                           loader: 'css-loader', 
+                           options: {
+                              sourceMap: true,
+                            },
                           },
-                        },
-                        
-                        {
-                         loader: 'css-loader', 
-                         options: {
-                            sourceMap: true,
-                          },
-                        },
 
-                        // {
-                        //   loader: 'resolve-url-loader',
-                        //    options: {
-                        //    root: path.resolve(__dirname, 'src'),
-                        //    sourceMap: true,
-                        //    },
-                        // },
+                          {
+                           loader: 'sass-loader',
+                           options: {
+                              context: path.resolve(__dirname, 'src'),
+                              root: path.resolve(__dirname, 'src'),
+                              sourceMap: true,
+                              includePaths: [path.resolve(__dirname, 'src/css'), path.resolve(__dirname, 'src')],
+                            },
+                          },     
+                        ],
 
-                        {
-                         loader: 'sass-loader',
-                         options: {
-                            context: path.resolve(__dirname, 'src'),
-                            root: path.resolve(__dirname, 'src'),
-                            sourceMap: true,
-                            includePaths: [path.resolve(__dirname, 'src/css'), path.resolve(__dirname, 'src')],
-                          },
-                        },
-                        
-                      ],
+                    }),
                  },
+
+                 {
+                  test: /\.(png|jp(e*)g|svg)$/,
+                  use: [{
+                    loader: 'url-loader',
+                      options: { 
+                        limit: 8000, // Convert images < 8kb to base64 strings
+                        name: 'images/[hash]-[name].[ext]'
+                    },
+                  }]
+         
+                },
+
          ],
+
+
+
       },
     
     watch: true, 
@@ -72,6 +78,7 @@ module.exports = {
     
     },
     plugins: [
+        new ExtractTextPlugin({filename:'app.bundle.css'}),
         new HtmlWebpackPlugin({
             hash:true,
             title: 'Webpack-Demo-App',
