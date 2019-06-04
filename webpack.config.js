@@ -10,7 +10,7 @@ module.exports = {
     mode: 'production',
     //changed the value for entry property from a string to an object with two keys -app and vendor
     entry: {
-        app: "./src/scripts/index.js",
+        app: "./src/scripts/app.js",
        // vendor: Object.keys(package.dependencies),
     }, 
     output: { 
